@@ -1,0 +1,19 @@
+--Запрос для поиска записей поля email с дублями.
+
+SELECT email, COUNT(*) AS count
+FROM Staff
+GROUP BY email
+HAVING count >  1;
+
+--Возраст каждого сотрудника на момент запроса.
+SELECT staff_id,
+       ROUND(
+              datediff(current_date(), DATE_FORMAT(birthday, 'YYYY-MM-DD')) /  365.25,0) as age
+FROM FamilyMembers;
+
+--Должность со вторым по величине уровнем зарплаты.
+SELECT j.name
+FROM Jobtitles AS j
+INNER JOIN Staff AS s ON j.jobtitle_id = s.jobtitle_id
+ORDER BY s.salary DESC
+LIMIT 1 OFFSET 0
